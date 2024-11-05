@@ -77,14 +77,14 @@
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(224, 26);
+            openToolStripMenuItem.Size = new Size(128, 26);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(224, 26);
+            saveToolStripMenuItem.Size = new Size(128, 26);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
@@ -146,7 +146,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Location = new Point(35, 228);
+            pictureBox1.Location = new Point(35, 118);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(400, 400);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -155,7 +155,7 @@
             // 
             // pictureBox2
             // 
-            pictureBox2.Location = new Point(490, 228);
+            pictureBox2.Location = new Point(490, 118);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(400, 400);
             pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -174,7 +174,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(193, 631);
+            label1.Location = new Point(193, 521);
             label1.Name = "label1";
             label1.Size = new Size(59, 20);
             label1.TabIndex = 3;
@@ -183,7 +183,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(666, 631);
+            label2.Location = new Point(666, 521);
             label2.Name = "label2";
             label2.Size = new Size(75, 20);
             label2.TabIndex = 4;
@@ -232,7 +232,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(924, 663);
+            ClientSize = new Size(924, 555);
             Controls.Add(label4);
             Controls.Add(trackBar2);
             Controls.Add(label3);
