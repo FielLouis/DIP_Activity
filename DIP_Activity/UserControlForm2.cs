@@ -35,6 +35,11 @@ namespace DIP_Activity
             saveFileDialog1.ShowDialog();
         }
 
+        public PictureBox getPictureBox1()
+        {
+            return pictureBox1;
+        }
+
         private void UserFormControl_Load(object sender, EventArgs e)
         {
             ClearImages();

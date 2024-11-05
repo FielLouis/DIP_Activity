@@ -31,8 +31,6 @@
             pictureBox1 = new PictureBox();
             pictureBox2 = new PictureBox();
             pictureBox3 = new PictureBox();
-            label1 = new Label();
-            label2 = new Label();
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
@@ -76,24 +74,6 @@
             pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox3.TabIndex = 5;
             pictureBox3.TabStop = false;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(115, 424);
-            label1.Name = "label1";
-            label1.Size = new Size(60, 20);
-            label1.TabIndex = 6;
-            label1.Text = "imageB";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(434, 424);
-            label2.Name = "label2";
-            label2.Size = new Size(61, 20);
-            label2.TabIndex = 7;
-            label2.Text = "imageA";
             // 
             // button1
             // 
@@ -167,8 +147,6 @@
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
-            Controls.Add(label2);
-            Controls.Add(label1);
             Controls.Add(pictureBox3);
             Controls.Add(pictureBox2);
             Controls.Add(pictureBox1);
@@ -188,8 +166,6 @@
         private PictureBox pictureBox1;
         private PictureBox pictureBox2;
         private PictureBox pictureBox3;
-        private Label label1;
-        private Label label2;
         private Button button1;
         private Button button2;
         private Button button3;

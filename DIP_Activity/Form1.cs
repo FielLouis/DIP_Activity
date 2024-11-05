@@ -1,5 +1,7 @@
 using System.Runtime.Intrinsics.X86;
 using System.Windows.Forms;
+using WebCamLib;
+using ImageProcess2;
 
 namespace DIP_Activity
 {
@@ -7,6 +9,7 @@ namespace DIP_Activity
     {
         Bitmap loaded, processed;
         UserControlForm2 form2Control;
+        Device[] devices;
 
         public Form1()
         {
@@ -155,6 +158,7 @@ namespace DIP_Activity
 
             menuStrip1.Visible = false;
             menuStrip2.Visible = true;
+            devices[0].Stop();
         }
 
         private void switchToForm1ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -177,6 +181,106 @@ namespace DIP_Activity
         private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             form2Control.SaveImage();
+        }
+
+        private void panelContainer_Paint(object sender, PaintEventArgs e)
+        {
+            devices = DeviceManager.GetAllDevices();
+        }
+
+        private void onToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            devices[0].ShowWindow(pictureBox1);
+        }
+
+        private void offToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            devices[0].Stop();
+        }
+
+        private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = true;
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            // Get 1 frame
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+            bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+            Bitmap b = new Bitmap(bmap);
+
+            //Ensures bmap exists
+            if (bmap != null)
+                BitmapFilter.GrayScale(b);
+            pictureBox2.Image = b;
+        }
+
+        private void inversionToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            timer2.Enabled = true;
+        }
+
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            // Get 1 frame
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+            bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+            Bitmap b = new Bitmap(bmap);
+
+            //Ensures bmap exists
+            if (bmap != null)
+                BitmapFilter.Invert(b);
+            pictureBox2.Image = b;
+        }
+
+        private void sepiaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            timer3.Enabled = true;
+        }
+
+        private void timer3_Tick(object sender, EventArgs e)
+        {
+            // Get 1 frame
+            IDataObject data;
+            Image bmap;
+            devices[0].Sendmessage();
+            data = Clipboard.GetDataObject();
+            bmap = (Image)(data.GetData("System.Drawing.Bitmap", true));
+            Bitmap b1 = new Bitmap(bmap);
+
+            //Ensures bmap exists
+            if (bmap != null)
+                processed = new Bitmap(b1.Width, b1.Height);
+            Color pixel;
+            int r, g, b;
+            for (int x = 0; x < b1.Width; x++)
+                for (int y = 0; y < b1.Height; y++)
+                {
+                    pixel = b1.GetPixel(x, y);
+                    r = (int)Math.Min((pixel.R * 0.393) + (pixel.G * 0.769) + (pixel.B * 0.189) * 1.2, 255);
+                    g = (int)Math.Min((pixel.R * 0.349) + (pixel.G * 0.686) + (pixel.B * 0.168) * 1.2, 255);
+                    b = (int)Math.Min((pixel.R * 0.272) + (pixel.G * 0.534) + (pixel.B * 0.131) * 1.2, 255);
+                    Color sepia = Color.FromArgb(r, g, b);
+                    processed.SetPixel(x, y, sepia);
+                }
+            pictureBox2.Image = processed;
+        }
+
+        private void onToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            devices[0].ShowWindow(form2Control.getPictureBox1());
+        }
+
+        private void offToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            devices[0].Stop();
         }
     }
 }
