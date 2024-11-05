@@ -6,9 +6,12 @@ namespace DIP_Activity
     public partial class Form1 : Form
     {
         Bitmap loaded, processed;
+        UserControlForm2 form2Control;
+
         public Form1()
         {
             InitializeComponent();
+            menuStrip2.Visible = false;
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -135,6 +138,45 @@ namespace DIP_Activity
         {
             BasicDIP.Equalisation(ref loaded, ref processed, trackBar2.Value / 100);
             pictureBox2.Image = processed;
+        }
+
+        private void moveToForm2ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = null;
+            pictureBox2.Image = null;
+
+            panelContainer.Controls.Clear();
+
+            if (form2Control == null)
+                form2Control = new UserControlForm2();
+
+            form2Control.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(form2Control);
+
+            menuStrip1.Visible = false;
+            menuStrip2.Visible = true;
+        }
+
+        private void switchToForm1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            form2Control.ClearImages();
+
+            panelContainer.Controls.Clear();
+
+            panelContainer.Controls.Add(pictureBox1);
+            panelContainer.Controls.Add(pictureBox2);
+            panelContainer.Controls.Add(trackBar1);
+            panelContainer.Controls.Add(trackBar2);
+            panelContainer.Controls.Add(label1);
+            panelContainer.Controls.Add(label2);
+
+            menuStrip2.Visible = false;
+            menuStrip1.Visible = true;
+        }
+
+        private void saveToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            form2Control.SaveImage();
         }
     }
 }
