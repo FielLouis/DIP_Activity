@@ -9,6 +9,7 @@ namespace DIP_Activity
     {
         Bitmap loaded, processed;
         UserControlForm2 form2Control;
+        CoinForm coinForm;
         Device[] devices;
 
         public Form1()
@@ -426,15 +427,10 @@ namespace DIP_Activity
 
             panelContainer.Controls.Clear();
 
-            if (form2Control == null)
-                form2Control = new UserControlForm2();
-
-            form2Control.Dock = DockStyle.Fill;
-            panelContainer.Controls.Add(form2Control);
-
-            menuStrip1.Visible = false;
-            menuStrip2.Visible = true;
-            devices[0].Stop();
+            if (coinForm == null)
+                coinForm = new CoinForm(this);
+                coinForm.Show();
+                this.Hide();
         }
     }
 }
