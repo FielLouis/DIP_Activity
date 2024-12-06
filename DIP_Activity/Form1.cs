@@ -30,6 +30,8 @@ namespace DIP_Activity
 
         private void pixelCopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (loaded == null) return;
+
             processed = new Bitmap(loaded.Width, loaded.Height);
             Color pixel;
             for (int x = 0; x < loaded.Width; x++)
@@ -53,36 +55,49 @@ namespace DIP_Activity
 
         private void grayscalingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            processed = new Bitmap(loaded.Width, loaded.Height);
-            Color pixel;
-            int avg;
-            for (int x = 0; x < loaded.Width; x++)
-                for (int y = 0; y < loaded.Height; y++)
-                {
-                    pixel = loaded.GetPixel(x, y);
-                    avg = (int)(pixel.R + pixel.G + pixel.B) / 3;
-                    Color gray = Color.FromArgb(avg, avg, avg);
-                    processed.SetPixel(x, y, gray);
-                }
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.GrayScale(processed);
+
+            //processed = new Bitmap(loaded.Width, loaded.Height);
+            //Color pixel;
+            //int avg;
+            //for (int x = 0; x < loaded.Width; x++)
+            //    for (int y = 0; y < loaded.Height; y++)
+            //    {
+            //        pixel = loaded.GetPixel(x, y);
+            //        avg = (int)(pixel.R + pixel.G + pixel.B) / 3;
+            //        Color gray = Color.FromArgb(avg, avg, avg);
+            //        processed.SetPixel(x, y, gray);
+            //    }
             pictureBox2.Image = processed;
+
         }
 
         private void inversionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            processed = new Bitmap(loaded.Width, loaded.Height);
-            Color pixel;
-            for (int x = 0; x < loaded.Width; x++)
-                for (int y = 0; y < loaded.Height; y++)
-                {
-                    pixel = loaded.GetPixel(x, y);
-                    Color inv = Color.FromArgb(255 - pixel.R, 255 - pixel.G, 255 - pixel.B);
-                    processed.SetPixel(x, y, inv);
-                }
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.Invert(processed);
+
+            //processed = new Bitmap(loaded.Width, loaded.Height);
+            //Color pixel;
+            //for (int x = 0; x < loaded.Width; x++)
+            //    for (int y = 0; y < loaded.Height; y++)
+            //    {
+            //        pixel = loaded.GetPixel(x, y);
+            //        Color inv = Color.FromArgb(255 - pixel.R, 255 - pixel.G, 255 - pixel.B);
+            //        processed.SetPixel(x, y, inv);
+            //    }
             pictureBox2.Image = processed;
         }
 
         private void mirrorHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (loaded == null) return;
+
             processed = new Bitmap(loaded.Width, loaded.Height);
             Color pixel;
             for (int x = 0; x < loaded.Width; x++)
@@ -96,6 +111,8 @@ namespace DIP_Activity
 
         private void mirrorVerticalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (loaded == null) return;
+
             processed = new Bitmap(loaded.Width, loaded.Height);
             Color pixel;
             for (int x = 0; x < loaded.Width; x++)
@@ -109,6 +126,8 @@ namespace DIP_Activity
 
         private void sepiaToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (loaded == null) return;
+
             processed = new Bitmap(loaded.Width, loaded.Height);
             Color pixel;
             int r, g, b;
@@ -127,18 +146,27 @@ namespace DIP_Activity
 
         private void histogramToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (loaded == null) return;
+
             BasicDIP.Hist(ref loaded, ref processed);
             pictureBox2.Image = processed;
         }
 
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
-            BasicDIP.Brightness(ref loaded, ref processed, trackBar1.Value);
+            if (loaded == null) return;
+
+            processed = (Bitmap)loaded.Clone();
+            BitmapFilter.Brightness(processed, trackBar1.Value);
+
+            //BasicDIP.Brightness(ref loaded, ref processed, trackBar1.Value);
             pictureBox2.Image = processed;
         }
 
         private void trackBar2_Scroll(object sender, EventArgs e)
         {
+            if (loaded == null) return;
+
             BasicDIP.Equalisation(ref loaded, ref processed, trackBar2.Value / 100);
             pictureBox2.Image = processed;
         }
@@ -280,6 +308,132 @@ namespace DIP_Activity
 
         private void offToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            devices[0].Stop();
+        }
+
+        private void trackBar1_Scroll_1(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = (Bitmap)loaded.Clone();
+            BitmapFilter.Brightness(processed, trackBar1.Value);
+            pictureBox2.Image = processed;
+        }
+
+        private void trackBar2_Scroll_1(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = (Bitmap)loaded.Clone();
+            BitmapFilter.Contrast(processed, (sbyte)trackBar2.Value);
+            pictureBox2.Image = processed;
+        }
+
+        private void smoothingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.Smooth(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void gaussianBlurToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.GaussianBlur(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void sharpenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.Sharpen(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void meanRemovalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.MeanRemoval(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void embossLaplacianToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            BitmapFilter.EmbossLaplacian(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void horizontalVerticalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            CustomEmbossFilter.EmbossHorzVert(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void horizontalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            CustomEmbossFilter.EmbossHorizontal(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void verticalOnlyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            CustomEmbossFilter.EmbossVertical(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void allDirectionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            CustomEmbossFilter.EmbossAllDirections(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void lossyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (loaded == null) return;
+
+            processed = new Bitmap(loaded);
+            CustomEmbossFilter.EmbossLossy(processed);
+            pictureBox2.Image = processed;
+        }
+
+        private void switchToCoinFormsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Image = null;
+            pictureBox2.Image = null;
+
+            panelContainer.Controls.Clear();
+
+            if (form2Control == null)
+                form2Control = new UserControlForm2();
+
+            form2Control.Dock = DockStyle.Fill;
+            panelContainer.Controls.Add(form2Control);
+
+            menuStrip1.Visible = false;
+            menuStrip2.Visible = true;
             devices[0].Stop();
         }
     }
